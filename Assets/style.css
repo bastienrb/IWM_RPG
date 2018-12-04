@@ -1,0 +1,43 @@
+/**
+    START PAGE
+ */
+
+#start_title {
+    margin: 0 auto !important;
+    font-size: 72px;
+}
+
+#start_landingmenu{
+    margin-top: 200px;
+}
+
+#start_playform {
+    margin: 0 auto;
+    text-align: center;
+}
+
+/**
+    CHOOSE CHARACTER PAGE
+ */
+
+#cc_classes {
+    margin-top: 100px;
+    text-align: center;
+}
+
+#cc_mage {
+    animation-delay: 0.3s;
+}
+
+#cc_archer {
+    animation-delay: 0.5s;
+}
+
+#cc_modal_mage, #cc_modal_archer, #cc_modal_warrior{
+    opacity: 1 !important;
+}
+
+.modal-backdrop.show{
+    opacity: 0;
+    z-index: -888;
+}
