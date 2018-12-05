@@ -21,22 +21,22 @@ switch ($level) {
 }
 ?>
 
-<div class="container">
+<div class="container-fluid">
 
     <div class="col-md-12">
         <div class="row">
             <div class="card text-white bg-primary mb-3 fadeInDown animated" style="max-width: 20rem;">
-                <div class="card-header">Niveau 1</div>
+                <div class="card-header">Niveau <?php echo $level;?></div>
                 <div class="card-body">
-                    <h4 class="card-title">De simples gobelins</h4>
-                    <p class="card-text">Utilisez vos sorts pour tuer les gobelins qui vous font face.</p>
+                    <h4 class="card-title">Un simple gobelin</h4>
+                    <p class="card-text">Utilisez vos sorts pour tuer le gobelin qui vous fait face.</p>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
-                <div class="card border-secondary mb-3" style="max-width: 20rem;">
-                    <div class="card-header text-primary"><?php echo $character->getName();?></div>
+            <div class="col-md-3">
+                <div class="card border-secondary mb-3">
+                    <div class="card-header text-primary"><h5><?php echo $character->getName();?></h5></div>
                     <div class="card-body">
 
                         <h4 class="card-title text-primary">Classe:</h4>
@@ -56,23 +56,28 @@ switch ($level) {
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="spells" id="level_spells">
+            <div class="col-md-6">
+                <div class="spells text-center" id="level_spells">
                     <div class="row">
-                    <div class="col-md-6">
-                        <img src="../../Assets/icons/mage_spell.png" width="75" alt="">
-                        test
-                    </div>
-                    <div class="col-md-6">
-                        <img src="../../Assets/icons/mage_spell2.png" width="75" alt="">
-                        test
-                    </div>
+                        <?php
+                        $spellCount = 1;
+                        foreach ($character->getSpells() as $spell) {?>
+                        <div class="col-md-4 text-primary mt-3">
+                            <span>Dommages: <?php echo $spell->getFullDamage($character->getPower());?></span>
+                            <br>
+                            <span class="mt-5">Coût en mana: <?php echo $spell->getCost();?></span>
+                            <img src=<?php echo "../../Assets/icons/". $character->getClassName() . "Spell" . $spellCount . ".png" ?> width="75" alt="">
+                            <br>
+                            <?php echo $spell->getName();?>
+                        </div>
+                         <?php $spellCount++;
+                        } ?>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card bg-dark mb-3" style="max-width: 20rem; color: #FFFFFF !important;">
-                    <div class="card-header"><?php echo $monster->getName();?></div>
+            <div class="col-md-3">
+                <div class="card bg-dark mb-3" style="color: #FFFFFF !important;">
+                    <div class="card-header"><h5 style="color: #FFFFFF !important;"><?php echo $monster->getName();?></h5></div>
                     <div class="card-body">
 
                         <h4 class="card-title">Type:</h4>

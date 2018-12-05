@@ -12,6 +12,7 @@ abstract class Character {
     protected $defense;
     protected $power;
     protected $weapon;
+    protected $spells;
 
     /**
      * Character constructor
@@ -22,10 +23,11 @@ abstract class Character {
      * @param int $maxMana      Maximum Mana Points
      * @param int $defense      Defense
      * @param int $power        Power
-     * @param Weapon $weapon       Weapon
+     * @param Weapon $weapon    Weapon
      * @param int $className    Class Name
+     * @param array $spells     Sorts
      */
-    public function __construct($name, $hp, $maxHp, $mana, $maxMana, $defense, $power, Weapon $weapon, $className)
+    public function __construct($name, $hp, $maxHp, $mana, $maxMana, $defense, $power, Weapon $weapon, $className, $spells)
     {
         $this->name = $name;
         $this->hp = $hp;
@@ -36,6 +38,7 @@ abstract class Character {
         $this->power = $power;
         $this->weapon = $weapon;
         $this->className = $className;
+        $this->spells = $spells;
     }
 
 
@@ -198,6 +201,8 @@ abstract class Character {
     }
 
     /**
+     * Equip Weapon function
+     *
      * @param Weapon $weapon
      */
     public function equipWeapon(Weapon $weapon) {
@@ -209,6 +214,8 @@ abstract class Character {
     }
 
     /**
+     * Unequip Weapon Function
+     *
      * @param Weapon $weapon
      */
     public function unequipWeapon(Weapon $weapon) {
@@ -217,6 +224,38 @@ abstract class Character {
         $this->defense -= $weapon->getManaBonus();
         $this->power -= $weapon->getPowerBonus();
         $this->weapon = null;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSpells()
+    {
+        return $this->spells;
+    }
+
+    /**
+     * @param array $spells
+     */
+    public function setSpells($spells)
+    {
+        foreach ($spells as $key => $spell) {
+            $this->spells[$key] = $spell;
+        }
+    }
+
+    /**
+     * Take Damage Function
+     *
+     * @param Character $attacker Character that attacks
+     * @param Character $defenser Character that takes damage
+     * @param $spell
+     */
+    public function takeDamage(Character $attacker, Character $defenser, $spell) {
+        if ($spell instanceof Spell)
+            $defenser->hp -= $spell->getFullDamage($attacker->getPower());
+        else
+            $defenser->hp -= $attacker->getPower();
     }
 
 }
