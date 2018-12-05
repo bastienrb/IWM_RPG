@@ -1,9 +1,8 @@
 <?php
-namespace Src\Classes;
 
-require_once 'Character.php';
-require_once 'Weapon.php';
-use Src\Classes\Character as Character;
+spl_autoload_register(function ($class) {
+    require_once '../Classes/' . $class . '.php';
+});
 
 class Warrior extends Character {
 

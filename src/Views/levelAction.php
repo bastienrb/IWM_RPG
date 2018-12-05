@@ -1,14 +1,8 @@
 <?php
 
-require '../Classes/Mage.php';
-require '../Classes/Warrior.php';
-require '../Classes/Archer.php';
-require '../Classes/Session.php';
-
-use Src\Classes\Mage;
-use Src\Classes\Warrior;
-use Src\Classes\Archer;
-use Src\Classes\Session;
+spl_autoload_register(function ($class) {
+    require_once '../Classes/' . $class . '.php';
+});
 
 $session = new Session();
 

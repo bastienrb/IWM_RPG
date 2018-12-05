@@ -15,8 +15,9 @@
 <body>
 
 <?php
-require '../Classes/Session.php';
-use Src\Classes\Session;
+spl_autoload_register(function ($class) {
+    require_once '../Classes/' . $class . '.php';
+});
 
 $session = new Session();
 ?>

@@ -1,5 +1,4 @@
 <?php
-namespace Src\Classes;
 require 'Weapon.php';
 
 
@@ -22,9 +21,11 @@ abstract class Character {
      * @param int $mana         Mana Points
      * @param int $maxMana      Maximum Mana Points
      * @param int $defense      Defense
+     * @param int $power        Power
+     * @param Weapon $weapon       Weapon
      * @param int $className    Class Name
      */
-    public function __construct($name, $hp, $maxHp, $mana, $maxMana, $defense, $power, $weapon, $className)
+    public function __construct($name, $hp, $maxHp, $mana, $maxMana, $defense, $power, Weapon $weapon, $className)
     {
         $this->name = $name;
         $this->hp = $hp;

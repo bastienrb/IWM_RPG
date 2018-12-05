@@ -1,7 +1,5 @@
 <?php
 
-namespace Src\Classes;
-
 class Weapon {
     protected $name;
     protected $type;

@@ -1,5 +1,4 @@
 <?php
-namespace Src\Classes;
 
 class Session {
 

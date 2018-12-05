@@ -37,6 +37,14 @@
     opacity: 1 !important;
 }
 
+/**
+    LEVEL PAGE
+ */
+
+#level_spells {
+    margin-top: 350px;
+}
+
 .modal-backdrop.show{
     opacity: 0;
     z-index: -888;

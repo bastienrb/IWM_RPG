@@ -1,9 +1,7 @@
 <?php
-namespace Src\Classes;
 
 require_once 'Character.php';
 require_once 'Weapon.php';
-use Src\Classes\Character as Character;
 
 class Mage extends Character {
 
