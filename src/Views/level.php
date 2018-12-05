@@ -1,31 +1,37 @@
 <?php
 
 include 'Structure/header.php';
-//include '../Classes/Mage.php';
-//include '../Classes/Warrior.php';
-//include '../Classes/Archer.php';
-//include '../Classes/Monster.php';
-//include '../Classes/Weapon.php';
 
 ?>
-
+<audio id="audioplayer" autobuffer="" loop="true" preload="auto" src="../../Assets/music2.mp3">
+</audio>
 <?php
-$level = $session->getSessionValue('Level');
+$serializedMonster = $session->getSessionValue('Monster');
 $serializedCharacter = $session->getSessionValue('Player');
-$character = unserialize($serializedCharacter);
-
-switch ($level) {
-    case 1:
-        $weapon = new Weapon('Bâton de bois usé', 'Bâton', 0, 0, 0, 0);
-        $monster = new Monster('Quentin le Gobelin', 20, 20, 5, 5, 0, 10, $weapon, 'Gobelin');
+$newGame = $session->getSessionValue('NewGame');
+if ($newGame) {
+    $level = $session->getSessionValue('Level');
+    $character = $serializedCharacter;
+    switch ($level) {
+        case 1:
+            $weapon = new Weapon('Bâton de bois usé', 'Bâton', 0, 0, 0, 0);
+            $monster = new Monster('Quentin le Gobelin', 20, 20, 5, 5, 0, 10, $weapon, 'Gobelin');
+            $session->setSessionValue('Monster', $monster);
+            $session->setSessionValue('NewGame', 0);
+    }
+} else {
+    $level = $session->getSessionValue('Level');
+    $monster = $serializedMonster;
+    $character = $serializedCharacter;
 }
+
 ?>
 
 <div class="container-fluid">
 
     <div class="col-md-12">
         <div class="row">
-            <div class="card text-white bg-primary mb-3 fadeInDown animated" style="max-width: 20rem;">
+            <div class="card text-white bg-primary mb-3 <?php if ($newGame) echo "fadeInDown animated"?>" style="max-width: 20rem;">
                 <div class="card-header">Niveau <?php echo $level;?></div>
                 <div class="card-body">
                     <h4 class="card-title">Un simple gobelin</h4>
@@ -66,7 +72,7 @@ switch ($level) {
                             <span>Dommages: <?php echo $spell->getFullDamage($character->getPower());?></span>
                             <br>
                             <span class="mt-5">Coût en mana: <?php echo $spell->getCost();?></span>
-                            <img src=<?php echo "../../Assets/icons/". $character->getClassName() . "Spell" . $spellCount . ".png" ?> width="75" alt="">
+                            <a href=<?php echo 'levelAction.php?spell=' . $spellCount ?>><img src="<?php echo "../../Assets/icons/". $character->getClassName() . "Spell" . $spellCount . ".png" ?>" width="75" alt=""/></a>
                             <br>
                             <?php echo $spell->getName();?>
                         </div>

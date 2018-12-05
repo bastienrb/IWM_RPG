@@ -251,11 +251,23 @@ abstract class Character {
      * @param Character $defenser Character that takes damage
      * @param $spell
      */
-    public function takeDamage(Character $attacker, Character $defenser, $spell) {
+    public function takeDamage(Character $attacker, $spell) {
         if ($spell instanceof Spell)
-            $defenser->hp -= $spell->getFullDamage($attacker->getPower());
+            $this->hp > 0 ? $this->hp -= $spell->getFullDamage($attacker->getPower()) : $this->hp = 0;
         else
-            $defenser->hp -= $attacker->getPower();
+            $this->hp > 0 ? $this->hp -= $attacker->getPower() : $this->hp = 0;
+    }
+
+    /**
+     * Remove Mana from spell
+     * @param Character $character
+     */
+    public function removeManaSpell(Spell $spell) {
+        $this->mana -= $spell->getCost();
+    }
+
+    public function isAlive() {
+        return $this->hp > 0;
     }
 
 }

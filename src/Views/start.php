@@ -1,5 +1,6 @@
 <?php
 include_once "Structure/header.php";
+session_destroy();
 ?>
     <div class="container">
 
@@ -9,7 +10,7 @@ include_once "Structure/header.php";
                 </div>
                 <div class="row mt-5">
                     <form action="character_choose.php" id="start_playform" method="POST">
-                        <input class="btn btn-lg btn-primary" id="start_playbutton" type="submit" name="play" value="Jouer!"/>
+                        <input class="btn btn-lg btn-primary fadeIn animated delay-2s" id="start_playbutton" type="submit" name="play" value="Jouer"/>
                     </form>
                 </div>
             </div>

@@ -6,6 +6,28 @@ spl_autoload_register(function ($class) {
 
 $session = new Session();
 
+if (isset($_GET['spell'])) {
+    $spells = $session->getSessionValue('Spells');
+    $spellnumber = $_GET['spell'] - 1;
+    $spell = $spells[$spellnumber];
+    $character = $session->getSessionValue('Player');
+    $monster = $session->getSessionValue('Monster');
+
+    $monster->takeDamage($character, $spell);
+    $character->takeDamage($monster, null);
+    $character->removeManaSpell($spell);
+    if ($character->isAlive() && $monster->isAlive()){
+    $session->setSessionValue('Player', $character);
+    $session->setSessionValue('Monster', $monster);
+
+    header('Location: level.php');
+    } else {
+        $character->isAlive() ? header('Location: win.php') : header('Location: loose.php');
+    }
+
+
+}
+
 if (isset($_POST['level'])){
     if($_POST['level'] == 1) {
         $name = 'Joueur';
@@ -26,8 +48,10 @@ if (isset($_POST['level'])){
                 $spells = [$spell1, $spell2, $spell3];
                 $character->setSpells($spells);
 
-                $session->setSessionValue("Player", serialize($character));
+                $session->setSessionValue("Player", $character);
                 $session->setSessionValue('Level', 1);
+                $session->setSessionValue('Spells', $spells);
+                $session->setSessionValue('NewGame', 1);
                 header('Location: level.php');
             } else if ($class == "Warrior") {
                 $character = new Warrior($name);
@@ -38,8 +62,10 @@ if (isset($_POST['level'])){
                 $spells = [$spell1, $spell2, $spell3];
                 $character->setSpells($spells);
 
-                $session->setSessionValue("Player", serialize($character));
+                $session->setSessionValue("Player", $character);
                 $session->setSessionValue('Level', 1);
+                $session->setSessionValue('Spells', $spells);
+                $session->setSessionValue('NewGame', 1);
                 header('Location: level.php');
             } else {
                 $character = new Archer($name);
@@ -50,11 +76,18 @@ if (isset($_POST['level'])){
                 $spells = [$spell1, $spell2, $spell3];
                 $character->setSpells($spells);
 
-                $session->setSessionValue("Player", serialize($character));
+                $session->setSessionValue("Player", $character);
                 $session->setSessionValue('Level', 1);
+                $session->setSessionValue('Spells', $spells);
+                $session->setSessionValue('NewGame', 1);
                 header('Location: level.php');
             }
         }
+    }
+} else {
+    if ($session->getSessionValue('Spell') == null && $session->getSessionValue('Player') != null && $session->getSessionValue('Monster') == null) {
+        $spell = $session->getSessionValue('Spell');
+
     }
 }
 

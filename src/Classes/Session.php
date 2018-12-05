@@ -35,9 +35,19 @@ class Session {
     }
 
     /**
+     * Destroy Session
      *
+     * @return void
      */
     public function destroySession(){
         session_destroy();
+    }
+
+    public function saveCharacters($character, $monster) {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+        $this->setSessionValue('Player', $character);
+        $this->setSessionValue('Monster', $monster);
     }
 }
