@@ -206,11 +206,13 @@ abstract class Character {
      * @param Weapon $weapon
      */
     public function equipWeapon(Weapon $weapon) {
+        if ($this->weapon->getName() != $weapon->getName()){
         $this->maxMana += $weapon->getManaBonus();
         $this->maxHp += $weapon->getHpBonus();
         $this->defense += $weapon->getManaBonus();
         $this->power += $weapon->getPowerBonus();
         $this->weapon = $weapon;
+        }
     }
 
     /**
@@ -248,19 +250,18 @@ abstract class Character {
      * Take Damage Function
      *
      * @param Character $attacker Character that attacks
-     * @param Character $defenser Character that takes damage
      * @param $spell
      */
     public function takeDamage(Character $attacker, $spell) {
         if ($spell instanceof Spell)
-            $this->hp > 0 ? $this->hp -= $spell->getFullDamage($attacker->getPower()) : $this->hp = 0;
+            $this->hp > 0 ? $this->hp -= $spell->getFullDamage($attacker->getPower()) + $this->defense : $this->hp = 0;
         else
-            $this->hp > 0 ? $this->hp -= $attacker->getPower() : $this->hp = 0;
+            $this->hp > 0 ? $this->hp -= $attacker->getPower() + $this->defense : $this->hp = 0;
     }
 
     /**
      * Remove Mana from spell
-     * @param Character $character
+     * @param Spell $spell
      */
     public function removeManaSpell(Spell $spell) {
         $this->mana -= $spell->getCost();

@@ -18,6 +18,9 @@ if ($newGame) {
             $monster = new Monster('Quentin le Gobelin', 20, 20, 5, 5, 0, 10, $weapon, 'Gobelin');
             $session->setSessionValue('Monster', $monster);
             $session->setSessionValue('NewGame', 0);
+            break;
+        default:
+            header('Location: start.php');
     }
 } else {
     $level = $session->getSessionValue('Level');
