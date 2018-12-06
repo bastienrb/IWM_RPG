@@ -27,7 +27,7 @@ $session->setSessionValue('Win', true);
             <div class="col-md-12">
                 <img src="../../Assets/icons/noReward.png" class="fadeInDown animated" width="75" alt="no reward">
                 <h2 class="mt-4 fadeIn animated delay-2s">Pas de récompenses</h2>
-                <p class="fadeIn animated delay-3s">(Tu t'attendais à quoi ?)</p>
+                <p class="fadeIn animated delay-3s">"Celui qui accepte son vide peut remplir sa vie."</p>
             </div>
     <?php }
           foreach ($rewards as $key => $reward) { ?>
@@ -35,7 +35,7 @@ $session->setSessionValue('Win', true);
             <div class="text-primary <?php echo 'col-md-' . 12 / $countRewards ?>">
                 <?php
 
-                if ($key == 'arme') { ?>
+                if ($key == 'arme' && $reward instanceof Weapon) { ?>
                     <div class="fadeIn animated delay-<?php echo $counter . 's' ?>">
                         <img src="../../Assets/icons/weapon.png" width="75" alt="">
                         <h4 class="mt-5"><?php echo $reward->getName();?></h4>
