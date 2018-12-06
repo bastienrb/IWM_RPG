@@ -23,7 +23,7 @@ class Win {
                 return $this->rewards;
                 break;
             case 2:
-                $this->rewards = [new Weapon('Arme 2', 'Arme', 5, 5, 5, 5), 'Or', 'Xp'];
+                $this->rewards = ['arme' => new Weapon('Arme 2', 'Arme', 5, 5, 5, 5), 'Or' => '20', 'Exp' => '200'];
                 return $this->rewards;
         }
     }

@@ -24,8 +24,14 @@ if (isset($_GET['spell'])) {
     } else {
         $character->isAlive() ? header('Location: win.php') : header('Location: loose.php');
     }
+}
 
+if ($session->getSessionValue('Win')) {
+    $session->setSessionValue('Level', $session->getSessionValue('Level') + 1);
+    $session->setSessionValue('Win', false);
+    $session->setSessionValue('NewGame', 1);
 
+    header('Location: level.php');
 }
 
 if (isset($_POST['level'])){

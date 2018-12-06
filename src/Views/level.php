@@ -19,6 +19,12 @@ if ($newGame) {
             $session->setSessionValue('Monster', $monster);
             $session->setSessionValue('NewGame', 0);
             break;
+        case 2:
+            $weapon = $weapon = new Weapon('Griffes lacérantes', 'Griffes', 0, 0, 0, 0);
+            $monster = new Monster('Petit dévoreur d\'ombres', 20, 20, 5, 5, 0, 10, $weapon, 'Ombre');
+            $session->setSessionValue('Monster', $monster);
+            $session->setSessionValue('NewGame', 0);
+            break;
         default:
             header('Location: start.php');
     }
