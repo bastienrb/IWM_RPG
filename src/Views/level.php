@@ -20,14 +20,26 @@ if ($newGame) {
             $session->setSessionValue('NewGame', 0);
             break;
         case 2:
-            $weapon = $weapon = new Weapon('Griffes lacérantes', 'Griffes', 0, 0, 0, 0);
+            $weapon = new Weapon('Griffes lacérantes', 'Griffes', 0, 0, 0, 0);
             $monster = new Monster('Petit dévoreur d\'ombres', 20, 20, 5, 5, 0, 10, $weapon, 'Ombre');
             $session->setSessionValue('Monster', $monster);
             $session->setSessionValue('NewGame', 0);
             break;
         case 3:
-            $weapon = $weapon = new Weapon('Griffes sanglantes', 'Griffes', 0, 0, 0, 0);
+            $weapon = new Weapon('Griffes sanglantes', 'Griffes', 0, 0, 0, 0);
             $monster = new Monster('Dévoreur d\'ombres majeur', 20, 20, 5, 5, 0, 10, $weapon, 'Ombre');
+            $session->setSessionValue('Monster', $monster);
+            $session->setSessionValue('NewGame', 0);
+            break;
+        case 4:
+            $weapon = new Weapon('Crocs givrés', 'Crocs', 0, 0, 0, 0);
+            $monster = new Monster('Hydre Vorace', 50, 50, 5, 5, 0, 10, $weapon, 'Hydre');
+            $session->setSessionValue('Monster', $monster);
+            $session->setSessionValue('NewGame', 0);
+            break;
+        case 5:
+            $weapon = new Weapon('Souffle ardent', 'Flammes', 0, 0, 0, 0);
+            $monster = new Monster('Elzram le furieux', 200, 200, 5, 5, 0, 10, $weapon, 'Dragon');
             $session->setSessionValue('Monster', $monster);
             $session->setSessionValue('NewGame', 0);
             break;
@@ -49,8 +61,8 @@ if ($newGame) {
             <div class="card text-white bg-primary mb-3 <?php if ($newGame) echo "fadeInDown animated"?>" style="max-width: 20rem;">
                 <div class="card-header">Niveau <?php echo $level;?></div>
                 <div class="card-body">
-                    <h4 class="card-title">Un simple gobelin</h4>
-                    <p class="card-text">Utilisez vos sorts pour tuer le gobelin qui vous fait face.</p>
+                    <h6 class="card-title"><?php echo $monster->getName() ?></h6>
+                    <p class="card-text">Utilisez vos sorts pour tuer le <?php echo $monster->getClassName() ?> qui vous fait face.</p>
                 </div>
             </div>
         </div>
@@ -78,6 +90,14 @@ if ($newGame) {
                 </div>
             </div>
             <div class="col-md-6">
+                <div id="logs" class="logs text-center" style="height: 100px; overflow: auto;">
+                    <?php
+                    $logs = $session->getSessionValue('Logs');
+                    foreach ($logs as $log) {
+                        echo '<p>' . $log . '</p>';
+                    }
+                    ?>
+                </div>
                 <div class="spells text-center" id="level_spells">
                     <div class="row">
                         <?php
@@ -121,6 +141,9 @@ if ($newGame) {
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    var chatHistory = document.getElementById("logs");
+    chatHistory.scrollTop = chatHistory.scrollHeight;</script>
 <?php
 include 'Structure/footer.php';
 ?>

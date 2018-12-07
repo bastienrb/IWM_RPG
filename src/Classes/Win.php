@@ -27,7 +27,15 @@ class Win {
                 return $this->rewards;
                 break;
             case 3:
-                $this->rewards = ['Or' => '200', 'Exp' => '400', 'Respect' => '10'];
+                $this->rewards = ['arme' => new Weapon('Arme 3', 'Arme', 20, 20, 20, 20), 'Or' => '200', 'Exp' => '400', 'Respect' => '10'];
+                return $this->rewards;
+                break;
+            case 4:
+                $this->rewards = ['Or' => '500', 'Exp' => '1000', 'Respect' => '40'];
+                return $this->rewards;
+                break;
+            case 5:
+                $this->rewards = ['Respect' => '1000000'];
                 return $this->rewards;
                 break;
 

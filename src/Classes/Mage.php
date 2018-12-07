@@ -11,7 +11,7 @@ class Mage extends Character {
      */
     public function __construct($name)
     {
-        $maxHp = 50;
+        $maxHp = 5000;
         $hp = $maxHp;
         $maxMana = 100;
         $mana = $maxMana;

@@ -3,6 +3,7 @@
 include 'Structure/header.php';
 
 $level = $session->getSessionValue('Level');
+$level == 5 ? $bottomButton = 'Recommencer' : $bottomButton = 'Niveau suivant';
 $win = new Win($level);
 $rewards = $win->getLevelRewards($level);
 $character = $session->getSessionValue('Player');
@@ -22,7 +23,12 @@ $session->setSessionValue('Win', true);
     <div class="row text-center mt-5">
     <?php $countRewards = count($rewards);
     $counter = 1;
-
+    if ($level == 5) { ?>
+        <div class="col-md-12">
+            <img src="../../Assets/icons/win2.png" class="fadeInDown animated" width="75" alt="no reward">
+            <h2 class="mt-4 fadeIn animated delay-2s">Félicitations ! </h2>
+        </div>
+    <?php }
     if ($countRewards < 1){ ?>
             <div class="col-md-12">
                 <img src="../../Assets/icons/noReward.png" class="fadeInDown animated" width="75" alt="no reward">
@@ -57,7 +63,7 @@ $session->setSessionValue('Win', true);
             </div>
 
           <?php $counter++;} ?>
-            <a href="levelAction.php" style="margin: 0 auto;" class="btn btn-primary">Niveau suivant</a>
+            <a href="levelAction.php" style="margin: 0 auto;" class="btn btn-primary"><?php echo $bottomButton?></a>
     </div>
 </div>
 <?php

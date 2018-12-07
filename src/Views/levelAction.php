@@ -13,9 +13,20 @@ if (isset($_GET['spell'])) {
     $character = $session->getSessionValue('Player');
     $monster = $session->getSessionValue('Monster');
 
-    $monster->takeDamage($character, $spell);
-    $character->takeDamage($monster, null);
+    if ($character->getMana() - $spell->getCost() < 0 ) {
+        $logs = $session->getSessionValue('Logs');
+        $message = 'Pas assez de mana pour lancer ' . $spell->getName() . '!';
+        array_push($logs, $message);
+        $session->setSessionValue('Logs', $logs);
+        header('Location: level.php');
+        exit;
+    }
+
     $character->removeManaSpell($spell);
+    $monster->takeDamage($character, $spell, $session);
+    $character->takeDamage($monster, null, $session);
+
+
     if ($character->isAlive() && $monster->isAlive()){
     $session->setSessionValue('Player', $character);
     $session->setSessionValue('Monster', $monster);
@@ -30,6 +41,7 @@ if ($session->getSessionValue('Win')) {
     $session->setSessionValue('Level', $session->getSessionValue('Level') + 1);
     $session->setSessionValue('Win', false);
     $session->setSessionValue('NewGame', 1);
+    $session->setSessionValue('Logs', []);
 
     header('Location: level.php');
 }
@@ -50,7 +62,7 @@ if (isset($_POST['level'])){
 
                 $spell1 = new Spell('Coup de bâton', 0, 0);
                 $spell2 = new Spell('Boule de feu mineure', 5, 10);
-                $spell3 = new Spell('Explosion Incandescente', 10, 20);
+                $spell3 = new Spell('Explosion Incandescente', 10, 90);
                 $spells = [$spell1, $spell2, $spell3];
                 $character->setSpells($spells);
 
@@ -58,6 +70,7 @@ if (isset($_POST['level'])){
                 $session->setSessionValue('Level', 1);
                 $session->setSessionValue('Spells', $spells);
                 $session->setSessionValue('NewGame', 1);
+                $session->setSessionValue('Logs', []);
                 header('Location: level.php');
             } else if ($class == "Warrior") {
                 $character = new Warrior($name);
@@ -72,6 +85,7 @@ if (isset($_POST['level'])){
                 $session->setSessionValue('Level', 1);
                 $session->setSessionValue('Spells', $spells);
                 $session->setSessionValue('NewGame', 1);
+                $session->setSessionValue('Logs', []);
                 header('Location: level.php');
             } else {
                 $character = new Archer($name);
@@ -86,6 +100,7 @@ if (isset($_POST['level'])){
                 $session->setSessionValue('Level', 1);
                 $session->setSessionValue('Spells', $spells);
                 $session->setSessionValue('NewGame', 1);
+                $session->setSessionValue('Logs', []);
                 header('Location: level.php');
             }
         }

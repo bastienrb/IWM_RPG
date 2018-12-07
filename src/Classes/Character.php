@@ -251,12 +251,23 @@ abstract class Character {
      *
      * @param Character $attacker Character that attacks
      * @param $spell
+     * @param Session $session
      */
-    public function takeDamage(Character $attacker, $spell) {
-        if ($spell instanceof Spell)
+    public function takeDamage(Character $attacker, $spell, $session) {
+        if ($spell instanceof Spell) {
             $this->hp > 0 ? $this->hp -= $spell->getFullDamage($attacker->getPower()) + $this->defense : $this->hp = 0;
-        else
+            $logs = $session->getSessionValue('Logs');
+            $message = $attacker->getName() . ' lance ' . $spell->getName() . '.<br> ' . $this->getName() . ' perd ' . $spell->getFullDamage($attacker->getPower()) . ' points de vie. <br> Vous perdez ' . $spell->getCost() . ' points de mana';
+            array_push($logs, $message);
+            $session->setSessionValue('Logs', $logs);
+        }
+        else {
             $this->hp > 0 ? $this->hp -= $attacker->getPower() + $this->defense : $this->hp = 0;
+            $logs = $session->getSessionValue('Logs');
+            $message = $attacker->getName() . ' vous attaque. '  .  'Vous perdez ' . $attacker->getPower() . ' points de vie.';
+            array_push($logs, $message);
+            $session->setSessionValue('Logs', $logs);
+        }
     }
 
     /**
@@ -264,7 +275,7 @@ abstract class Character {
      * @param Spell $spell
      */
     public function removeManaSpell(Spell $spell) {
-        $this->mana -= $spell->getCost();
+            $this->mana -= $spell->getCost();
     }
 
     public function isAlive() {
